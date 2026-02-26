@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Chat2Word</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #f9f9fb;
+      --border: #e8e8ed;
+      --text-primary: #1c1c1e;
+      --text-secondary: #6e6e73;
+      --text-muted: #aeaeb2;
+      --accent: #0066cc;
+      --accent-soft: #e8f0fb;
+      --divider: #f2f2f7;
+      --sidebar-w: 260px;
+      --content-max: 720px;
+      --font-serif: 'DM Serif Display', 'Noto Serif SC', Georgia, serif;
+      --font-sans: 'Noto Sans SC', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      font-size: 15px;
+      line-height: 1.85;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px) saturate(1.5);
+      -webkit-backdrop-filter: blur(12px) saturate(1.5);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      z-index: 100;
+    }
+    .topbar-brand {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .topbar-sep {
+      color: var(--text-muted);
+      margin: 0 12px;
+      font-weight: 300;
+    }
+    .topbar-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      padding-top: 56px;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      padding: 40px 0 40px 32px;
+      border-right: 1px solid var(--border);
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .toc-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .toc-list { list-style: none; }
+    .toc-list li + li { margin-top: 2px; }
+    .toc-list a {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 5px 12px 5px 0;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+      transition: color 0.2s, border-color 0.2s;
+      line-height: 1.4;
+    }
+    .toc-list a:hover { color: var(--text-primary); }
+    .toc-list a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── Main content ── */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 64px 64px 120px;
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 128px);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      margin-bottom: 64px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .hero-meta strong { color: var(--text-secondary); font-weight: 400; }
+
+    /* ── Notice banner ── */
+    .notice {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 56px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+    .notice strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ── Sections ── */
+    .section {
+      padding-top: 12px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--divider);
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .section:last-child { border-bottom: none; margin-bottom: 0; }
+    /* stagger */
+    .section:nth-child(1) { animation-delay: 0.15s; }
+    .section:nth-child(2) { animation-delay: 0.2s; }
+    .section:nth-child(3) { animation-delay: 0.25s; }
+    .section:nth-child(4) { animation-delay: 0.3s; }
+    .section:nth-child(5) { animation-delay: 0.35s; }
+    .section:nth-child(6) { animation-delay: 0.4s; }
+    .section:nth-child(7) { animation-delay: 0.45s; }
+    .section:nth-child(8) { animation-delay: 0.5s; }
+    .section:nth-child(9) { animation-delay: 0.55s; }
+    .section:nth-child(10) { animation-delay: 0.6s; }
+
+    .section-num {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    .section-subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
+      margin: 24px 0 10px;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    p { color: var(--text-secondary); margin-bottom: 14px; font-weight: 300; }
+    p:last-child { margin-bottom: 0; }
+
+    strong { color: var(--text-primary); font-weight: 500; }
+
+    /* ── Data list ── */
+    .data-list {
+      list-style: none;
+      margin: 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .data-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+    .data-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      margin-top: 9px;
+    }
+    .data-list.negative li::before {
+      background: #c7c7cc;
+    }
+
+    /* ── Steps list ── */
+    .steps-list {
+      list-style: none;
+      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .steps-list li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .steps-list li::before {
+      content: counter(step);
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--divider);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    /* ── Deny grid ── */
+    .deny-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .deny-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      position: relative;
+      padding-left: 32px;
+    }
+    .deny-item::before {
+      content: '×';
+      position: absolute;
+      left: 12px;
+      top: 11px;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* ── Permission tags ── */
+    .perm-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .perm-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .perm-tag {
+      flex-shrink: 0;
+      font-family: 'Noto Sans SC', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: 3px 8px;
+      letter-spacing: 0.02em;
+      margin-top: 2px;
+    }
+    .perm-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── Host list ── */
+    .host-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .host-chip {
+      font-size: 12px;
+      font-weight: 400;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 13px;
+      color: var(--text-secondary);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Contact card ── */
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .contact-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      width: 60px;
+      flex-shrink: 0;
+    }
+    .contact-row a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .contact-row a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 80px;
+      padding: 32px 64px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-brand {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+    .footer-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── Animation ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 40px 24px 80px; }
+      .topbar { padding: 0 20px; }
+      .deny-grid { grid-template-columns: 1fr; }
+      .footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <a href="#" class="topbar-brand">Chat2Word</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-label">隐私政策 · Privacy Policy</span>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar TOC -->
+  <nav class="sidebar" aria-label="目录">
+    <p class="toc-label">目录</p>
+    <ul class="toc-list" id="toc">
+      <li><a href="#s1">1. 我们收集的数据</a></li>
+      <li><a href="#s2">2. 如何使用数据</a></li>
+      <li><a href="#s3">3. 如何共享数据</a></li>
+      <li><a href="#s4">4. 数据存储</a></li>
+      <li><a href="#s5">5. 权限说明</a></li>
+      <li><a href="#s6">6. 第三方服务</a></li>
+      <li><a href="#s7">7. 儿童隐私</a></li>
+      <li><a href="#s8">8. 安全措施</a></li>
+      <li><a href="#s9">9. 政策更新</a></li>
+      <li><a href="#s10">10. 联系方式</a></li>
+    </ul>
+  </nav>
+
+  <!-- Content -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <p class="hero-eyebrow">Chrome Extension</p>
+      <h1 class="hero-title">隐私政策<br/>Privacy Policy</h1>
+      <p class="hero-meta">
+        <strong>Chat2Word</strong> &nbsp;·&nbsp; 最近更新：2025 年 12 月 24 日
+      </p>
+    </div>
+
+    <!-- Notice -->
+    <div class="notice">
+      欢迎使用 <strong>Chat2Word</strong>。我们非常重视用户隐私，并承诺严格保护您的个人信息。本隐私政策解释我们如何收集、使用和处理您的数据。<br/>
+      本扩展符合 <strong>Chrome Web Store User Data Privacy</strong> 的相关要求。
+    </div>
+
+    <!-- Section 1 -->
+    <section class="section" id="s1">
+      <p class="section-num">Section 01</p>
+      <h2 class="section-title">我们收集的数据<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">What data we collect</small></h2>
+      <p>本扩展<strong>不收集任何用户个人信息</strong>，也不存储、不上传、不共享任何用户数据。</p>
+      <p>扩展处理的数据仅包括在用户操作时本地读取的网页内容：</p>
+      <p class="section-subtitle">触发条件</p>
+      <ul class="data-list">
+        <li>点击扩展的悬浮按钮导出对话</li>
+        <li>通过扩展弹窗选择导出选项</li>
+      </ul>
+      <p style="margin-top:14px;">扩展会<strong>在本地内存中临时读取并处理当前页面的 AI 对话内容</strong>，以便生成 Word 文档（.docx）。</p>
+
+      <p class="section-subtitle">不收集的数据</p>
+      <ul class="data-list negative">
+        <li>个人身份信息</li>
+        <li>浏览记录</li>
+        <li>Cookies</li>
+        <li>登录信息</li>
+        <li>表单数据</li>
+        <li>设备或系统信息</li>
+        <li>用户与 AI 的对话内容（不会被上传或存储）</li>
+      </ul>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="section" id="s2">
+      <p class="section-num">Section 02</p>
+      <h2 class="section-title">如何使用数据<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">How we use data</small></h2>
+      <p>扩展仅将用户主动选择导出的对话内容用于以下目的：</p>
+      <ol class="steps-list">
+        <li><strong>在本地解析对话内容</strong>并转换为 Word 文档格式</li>
+        <li><strong>生成 .docx 文件</strong>并通过浏览器下载功能保存到用户本地</li>
+        <li>整个处理过程仅发生在本地浏览器，<strong>无任何上传行为</strong></li>
+      </ol>
+      <p style="margin-top:16px;">扩展不会在本地硬盘（除用户主动下载的文件外）、服务器或云端存储任何数据。</p>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="section" id="s3">
+      <p class="section-num">Section 03</p>
+      <h2 class="section-title">如何共享数据<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">How we share data</small></h2>
+      <p>本扩展没有任何外部网络请求，所有功能均在本地完成。</p>
+      <div class="deny-grid">
+        <div class="deny-item">不与任何第三方共享用户数据</div>
+        <div class="deny-item">不与广告商或数据经纪商共享数据</div>
+        <div class="deny-item">不将数据发送至开发者或外部服务器</div>
+        <div class="deny-item">不内置跟踪、分析或统计工具</div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section class="section" id="s4">
+      <p class="section-num">Section 04</p>
+      <h2 class="section-title">数据存储<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Data Storage</small></h2>
+      <ul class="data-list">
+        <li>扩展<strong>不存储任何用户对话内容或个人隐私数据</strong>。</li>
+        <li>扩展仅使用浏览器本地存储（<code style="font-size:12px;background:var(--surface);padding:1px 5px;border-radius:3px;color:var(--text-secondary)">chrome.storage.local</code>）保存用户的个性化设置，如悬浮按钮显示状态、导出格式偏好等配置信息。</li>
+        <li>这些设置数据仅保存在用户本地浏览器中，不会上传、同步或共享到任何外部服务器。</li>
+        <li>对话内容的处理均在浏览器的内存环境中实时完成，关闭标签页后即被清除。</li>
+        <li>扩展没有服务器端组件，因此不存在服务器端存储。</li>
+        <li>导出的 Word 文档仅保存在用户选择的本地位置。</li>
+      </ul>
+    </section>
+
+    <!-- Section 5 -->
+    <section class="section" id="s5">
+      <p class="section-num">Section 05</p>
+      <h2 class="section-title">权限说明<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Permissions</small></h2>
+      <p>本扩展请求以下权限：</p>
+      <div class="perm-list">
+        <div class="perm-item">
+          <span class="perm-tag">activeTab</span>
+          <span class="perm-desc">用于在用户主动点击时访问当前标签页的对话内容。</span>
+        </div>
+        <div class="perm-item">
+          <span class="perm-tag">storage</span>
+          <span class="perm-desc">用于在本地存储用户的个性化设置（如悬浮按钮开关状态、导出格式偏好等），所有数据仅保存在用户本地浏览器中，不会上传或同步到任何服务器。</span>
+        </div>
+      </div>
+
+      <p class="section-subtitle">主机权限 · Host Permissions</p>
+      <p>本扩展仅在以下网站上运行，这些权限仅用于在上述 AI 对话平台注入导出功能，不会访问其他任何网站。</p>
+      <div class="host-list">
+        <span class="host-chip">claude.ai</span>
+        <span class="host-chip">chat.openai.com</span>
+        <span class="host-chip">chatgpt.com</span>
+        <span class="host-chip">gemini.google.com</span>
+        <span class="host-chip">chat.deepseek.com</span>
+      </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section class="section" id="s6">
+      <p class="section-num">Section 06</p>
+      <h2 class="section-title">第三方服务<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Third-Party Services</small></h2>
+      <p>本扩展不与任何第三方服务交互。所有文档生成和处理均在本地完成，不依赖外部 API 或服务。</p>
+    </section>
+
+    <!-- Section 7 -->
+    <section class="section" id="s7">
+      <p class="section-num">Section 07</p>
+      <h2 class="section-title">儿童隐私<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Children's Privacy</small></h2>
+      <p>本扩展不面向儿童，也不会收集任何个人数据，因此不涉及 COPPA 相关风险。</p>
+    </section>
+
+    <!-- Section 8 -->
+    <section class="section" id="s8">
+      <p class="section-num">Section 08</p>
+      <h2 class="section-title">安全措施<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Security</small></h2>
+      <p>由于扩展不上传、不共享、不存储用户数据，数据泄露风险极低。所有操作均在用户本地浏览器环境中完成。</p>
+    </section>
+
+    <!-- Section 9 -->
+    <section class="section" id="s9">
+      <p class="section-num">Section 09</p>
+      <h2 class="section-title">政策更新<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Updates to this Policy</small></h2>
+      <p>我们可能会根据扩展功能更新本隐私政策。如有重大变动，会在 Chrome Web Store 页面进行提示。</p>
+    </section>
+
+    <!-- Section 10 -->
+    <section class="section" id="s10">
+      <p class="section-num">Section 10</p>
+      <h2 class="section-title">联系方式<br/><small style="font-size:0.55em;font-family:var(--font-sans);color:var(--text-muted);font-weight:300;">Contact</small></h2>
+      <p>如有任何隐私相关问题，请联系开发者：</p>
+      <div class="contact-card">
+        <div class="contact-row">
+          <span class="contact-label">Email</span>
+          <a href="mailto:brucevanfdm@gmail.com">brucevanfdm@gmail.com</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">GitHub</span>
+          <a href="https://github.com/brucevanfdm/Chat2Word" target="_blank" rel="noopener">github.com/brucevanfdm/Chat2Word</a>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">扩展名称</span>
+          <span>Chat2Word</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <span class="footer-brand">Chat2Word</span>
+  <span class="footer-meta">© 2025 Chat2Word · 最近更新 2025-12-24</span>
+</footer>
+
+<script>
+  // TOC active highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('#toc a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`#toc a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
